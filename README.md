@@ -1,3 +1,28 @@
+# BLOG MODEL
+É um projeto pessoal que consiste em fazer um modelo de uma WEBSite de Blogs, onde qualquer utilizador pode fazer a sua publicação.
+
+Primeiramente este projeto vai conter:
+* imprimir todas as publicações
+* editar as publicações
+* remover as publicações
+E no futuro vai poder ter uma conta utilizador com a sua dashboard onde ele pode editar os seus dados ect e podendo so editar e remover as suas publicações.
+
+A classe publicações vai ter os seguintes atributos:
+* ID_pub - id da publicacao
+* data_pub - data de quando foi criado / de quando foi editado
+* title_pub - titlo da pub
+* text_pub - conteudo da pub
+* ID_user - inicialmente com 0 mas no futuro seria o id_user que criou a publicacao
+* edit_pub (0/1) - 0 se nao foi editado e 1 se foi editado 
+
+
+## Layout
+
+Quando se abre a pagina teria a "Loading screen" e ao entrar na pagina inicial ia ter a barra de navegação com uma imagem.
+E por baixo dessa imagem seria exposto todas as publicações da mais recentes para mais antigas. 
+
+----
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
