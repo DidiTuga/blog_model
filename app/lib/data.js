@@ -17,9 +17,15 @@ function atualizaPublicacoes() {
     });
     publicacoes = publ;
   });
+
+  
 }
 
 export class Publicacao {
+  // atributos
+
+  // construtor
+
   constructor(ID_pub, data_pub,title_pub, text_pub, ID_user, edit_pub) {
     this.ID_pub = ID_pub;
     this.data_pub = data_pub;
@@ -28,6 +34,44 @@ export class Publicacao {
     this.ID_user = ID_user;
     this.edit_pub = edit_pub;
   }
+  // getters e setters
+  get getID_pub() {
+    return this.ID_pub;
+  }
+  set setID_pub(value) {
+    this.ID_pub = value;
+  }
+  get getData_pub() {
+    return this.data_pub;
+  }
+  set setData_pub(value) {
+    this.data_pub = value;
+  }
+  get getTitle_pub() {
+    return this.title_pub;
+  }
+  set setTitle_pub(value) {
+    this.title_pub = value;
+  }
+  get getText_pub() {
+    return this.text_pub;
+  }
+  set setText_pub(value) {
+    this.text_pub = value;
+  }
+  get getID_user() {
+    return this.ID_user;
+  }
+  set setID_user(value) {
+    this.ID_user = value;
+  }
+  get getEdit_pub() {
+    return this.edit_pub;
+  }
+  set setEdit_pub(value) {
+    this.edit_pub = value;
+  }
+  // métodos estáticos
 
   // busca todos os publs
   static getPublicacoes() {
@@ -41,18 +85,14 @@ export class Publicacao {
   // adiciona um publ
   static addPubl(publ) {
     try {
-      const [result] = db.query(
-        "INSERT INTO pub (data_pub, title_pub,text_pub, ID_user, edit_pub) VALUES (?, ?, ?, ?)",
-        [publ.data_pub, publ.title_pub, publ.text_pub, publ.ID_user, publ.edit_pub]
+      const result = db.query(
+        "INSERT INTO pub (data_pub, title_pub, text_pub, ID_user, edit_pub) VALUES (?, ?, ?, ?, ?)",
+        [publ.getData_pub, publ.getTitle_pub, publ.getText_pub, publ.getID_user, publ.getEdit_pub]
       );
-
-      publ.ID_pub = result.insertId;
-
-      return publ;
     } catch (error) {
-      console.error("Erro ao adicionar publ:", error);
-    }
+      console.log("Erro ao adicionar publ:", error);    }
   }
+  
   // busca um publ pelo ID
   static getPublicacaoByID(ID_pub) {
     try {

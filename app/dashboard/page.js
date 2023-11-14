@@ -1,17 +1,11 @@
 import Link from "next/link";
+import NavBar from "../components/navbar";
 
 function dashboard() {
   return (
     <main>
-      <h1>DashBoard</h1>
-      <ul>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/dashboard">DashBoard</Link>
-        </li>
-      </ul>
+       <NavBar/>
+       <h1>Dashboard</h1>
     </main>
   );
 }

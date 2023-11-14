@@ -5,13 +5,14 @@ Primeiramente este projeto vai conter:
 * imprimir todas as publicações
 * editar as publicações
 * remover as publicações
-E no futuro vai poder ter uma conta utilizador com a sua dashboard onde ele pode editar os seus dados ect e podendo so editar e remover as suas publicações.
+E no futuro vai poder ter uma conta utilizador com a sua dashboard onde ele pode editar os seus dados ect e podendo so editar e remover as suas publicações. E comentar as publicações.
+
 
 A classe publicações vai ter os seguintes atributos:
 * ID_pub - id da publicacao
 * data_pub - data de quando foi criado / de quando foi editado
-* title_pub - titlo da pub
-* text_pub - conteudo da pub
+* title_pub - titlo da pub (45car)
+* text_pub - conteudo da pub (300car)
 * ID_user - inicialmente com 0 mas no futuro seria o id_user que criou a publicacao
 * edit_pub (0/1) - 0 se nao foi editado e 1 se foi editado 
 
@@ -20,6 +21,8 @@ A classe publicações vai ter os seguintes atributos:
 
 Quando se abre a pagina teria a "Loading screen" e ao entrar na pagina inicial ia ter a barra de navegação com uma imagem.
 E por baixo dessa imagem seria exposto todas as publicações da mais recentes para mais antigas. 
+
+![Alt text](./public/image.png)
 
 ----
 
