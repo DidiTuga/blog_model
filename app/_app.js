@@ -1,3 +1,4 @@
+// app para importar bootstrap para todas as paginas
 import "bootstrap/dist/css/bootstrap.min.css";
 import Head from "next/head";
 

@@ -17,8 +17,6 @@ function atualizaPublicacoes() {
     });
     publicacoes = publ;
   });
-
-  
 }
 
 export class Publicacao {
@@ -26,7 +24,7 @@ export class Publicacao {
 
   // construtor
 
-  constructor(ID_pub, data_pub,title_pub, text_pub, ID_user, edit_pub) {
+  constructor(ID_pub, data_pub, title_pub, text_pub, ID_user, edit_pub) {
     this.ID_pub = ID_pub;
     this.data_pub = data_pub;
     this.title_pub = title_pub;
@@ -87,12 +85,19 @@ export class Publicacao {
     try {
       const result = db.query(
         "INSERT INTO pub (data_pub, title_pub, text_pub, ID_user, edit_pub) VALUES (?, ?, ?, ?, ?)",
-        [publ.getData_pub, publ.getTitle_pub, publ.getText_pub, publ.getID_user, publ.getEdit_pub]
+        [
+          publ.getData_pub,
+          publ.getTitle_pub,
+          publ.getText_pub,
+          publ.getID_user,
+          publ.getEdit_pub,
+        ]
       );
     } catch (error) {
-      console.log("Erro ao adicionar publ:", error);    }
+      console.log("Erro ao adicionar publ:", error);
+    }
   }
-  
+
   // busca um publ pelo ID
   static getPublicacaoByID(ID_pub) {
     try {

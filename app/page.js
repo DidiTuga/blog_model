@@ -1,4 +1,5 @@
 "use client";
+
 import "bootstrap/dist/css/bootstrap.css";
 import Link from "next/link";
 import NavBar from "./components/navbar";
@@ -65,7 +66,6 @@ function Home() {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <h2 className="text-center">Home Page</h2>
-
             <div className="card">
               <div className="card-body">
                 <div className="form-group">
