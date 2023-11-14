@@ -5,22 +5,22 @@ function NavBar() {
   // use client
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <div className="mb-5">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
           <Link href="/">
             <Image src="/../favicon.ico" alt="logo" width="25" height="25" />
           </Link>
-          <div>
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <div className="collapse navbar-collapse ms-auto" id="navbarNav">
+            <ul className="navbar-nav">
               <li className="nav-item">
-                <Link href="/">Home</Link>
+                <Link href="/" id="no-decoration" className="nav-link text-white">Home</Link>
               </li>
               <li className="nav-item">
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/dashboard" id="no-decoration" className="nav-link text-white">Dashboard</Link>
               </li>
               <li className="nav-item">
-                <Link href="/api/pub">API</Link>
+                <Link href="/api/pub"  className="nav-link text-white">API</Link>
               </li>
             </ul>
           </div>

@@ -1,3 +1,4 @@
+// HOME PAGE
 "use client";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -8,9 +9,10 @@ import { useEffect, useState } from "react";
 function Home() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState("");
   const [pubs, setPubs] = useState([]);
 
+  // obtem os dados do servidor
   const getPub = async () => {
     try {
       const response = await fetch("/api/pub", {
@@ -25,6 +27,14 @@ function Home() {
       }
 
       const data = await response.json();
+      // ordena os posts por data da mais recente para a mais antiga e coloca a nova data no formato normal
+      data.posts.sort((a, b) => {
+        return new Date(b.data_pub) - new Date(a.data_pub);
+      });
+      data.posts.forEach((pub) => {
+        pub.data_pub = new Date(pub.data_pub).toLocaleString();
+      });
+
       setPubs(data.posts);
       // handle the response data
     } catch (error) {
@@ -33,29 +43,35 @@ function Home() {
       );
     }
   };
-
+  // envia os dados do formulário para o servidor
   const submitPub = async () => {
     try {
-      const response = await fetch("/api/pub", {
-        method: "POST",
-        body: JSON.stringify({ title, text }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      if (title=== "" || text=== "") {
+        setErrorMessage("Preencha todos os campos!");
+      } else {
+        setErrorMessage("");
+        const response = await fetch("/api/pub", {
+          method: "POST",
+          body: JSON.stringify({ title, text }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        await response.json();
+        // atualiza a página
+        location.reload();
       }
-
-      const data = await response.json();
-      // handle the response data
     } catch (error) {
       console.error(
         "There was a problem with the fetch operation: " + error.message
       );
     }
   };
+  // obtem os dados do servidor ao carregar a página
   useEffect(() => {
     getPub();
   }, []);
@@ -65,28 +81,34 @@ function Home() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8">
-            <h2 className="text-center">Home Page</h2>
-            <div className="card">
+            <div className="card mt-3 shadow-lg">
+              <div className="card-header pt-3 bg-dark text-white">
+                <h5 className="text-center">Nova Publicação</h5>
+              </div>
               <div className="card-body">
                 <div className="form-group">
                   <input
                     type="text"
                     id="title"
-                    className="m-1 form-control"
+                    className="mt-2 form-control"
                     placeholder="Título"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
-
                   <textarea
                     value={text}
-                    className="m-1 form-control"
+                    className="mt-2 form-control"
                     rows="3"
+                    placeholder="Texto"
                     onChange={(e) => setText(e.target.value)}
                   />
 
-                  <button className="m-1 btn btn-primary" onClick={submitPub}>
-                    Submit
+                  <div className="mt-2">
+                    <p className="text-danger text-center">{errorMessage}</p>
+                  </div>
+
+                  <button className="mt-2 btn btn-dark w-100 p-2" onClick={submitPub}>
+                    Submeter
                   </button>
                 </div>
               </div>
@@ -94,13 +116,14 @@ function Home() {
 
             <div>
               {pubs.map((pub) => (
-                <div key={pub.ID_pub} className="card mt-3 shadow-lg">
-                  <div className="card-header bg-primary text-white">
-                    <h3 className="text-center">{pub.title_pub}</h3>
-                  </div>
+                <div key={pub.ID_pub} className="card mt-3 mb-3">
+                  <div className="card-header text-right">{pub.data_pub}</div>
                   <div className="card-body">
-                    <p>{pub.text_pub}</p>
-                    <p>{pub.data_pub}</p>
+                    <h5 className="card-title">{pub.title_pub}</h5>
+                    <p className="card-text">{pub.text_pub}</p>
+                  </div>
+                  <div className="card-footer text-muted">
+                    Publicada por: ...
                   </div>
                 </div>
               ))}
