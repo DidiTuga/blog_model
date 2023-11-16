@@ -5,6 +5,10 @@ function dashboard() {
   return (
     <main>
       <NavBar />
+
+
+
+      
       <h1>Dashboard</h1>
     </main>
   );

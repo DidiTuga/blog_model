@@ -101,23 +101,7 @@ export class Publicacao {
   // busca um publ pelo ID
   static getPublicacaoByID(ID_pub) {
     try {
-      const [rows] = db.query("SELECT * FROM pub WHERE ID_pub = ?", [ID_pub]);
-
-      if (!rows.length) {
-        throw new Error("Publicacao não encontrado");
-      }
-
-      const row = rows[0];
-
-      const publ = new publ(
-        row.ID_pub,
-        row.data_pub,
-        row.title_pub,
-        row.text_pub,
-        row.ID_user,
-        row.edit_pub
-      );
-
+      const publ = publicacoes.find((publ) => publ.getID_pub == ID_pub);
       return publ;
     } catch (error) {
       console.error("Erro ao buscar publ:", error);
@@ -133,6 +117,22 @@ export class Publicacao {
       db.query("DELETE FROM pub WHERE ID_pub = ?", [ID_pub]);
     } catch (error) {
       console.error("Erro ao apagar publ:", error);
+    }
+  }
+  static updatePublicacaoByID(ID_pub, title_pub, text_pub) {
+    try {
+      if (!ID_pub) {
+        throw new Error("ID_pub não informado");
+      }
+
+      const data_pub = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+      db.query(
+        "UPDATE pub SET title_pub = ?, text_pub = ?, data_pub = ?, edit_pub = 1 WHERE ID_pub = ?",
+        [title_pub, text_pub, data_pub, ID_pub]
+      );
+    } catch (error) {
+      console.error("Erro ao atualizar publ:", error);
     }
   }
 }

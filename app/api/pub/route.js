@@ -50,3 +50,68 @@ export async function POST(request) {
     });
   }
 }
+
+// apagar uma publicação
+
+export async function DELETE(request) {
+  try {
+    // Obter automaticamente os dados JSON da requisição
+    const data = await request.json();
+    const id = data.id;
+
+    // Simulando a adição de uma publicação (ajuste conforme sua lógica real)
+    Publicacao.deletePublicacaoByID(id);
+    // Retornar uma resposta com os dados da nova publicação
+    return new Response(JSON.stringify({ message: "OK" }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    // Retornar uma resposta de erro
+    return new Response(JSON.stringify({ message: "Erro", error }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+}
+export async function PUT(request) {
+  try {
+    // Obter automaticamente os dados JSON da requisição
+    const data = await request.json();
+    const id = data.id;
+    const text = data.text;
+    const title = data.title;
+    const publ = Publicacao.getPublicacaoByID(id);
+
+    if (text == "") {
+      Publicacao.updatePublicacaoByID(id, title, publ.getText_pub);
+    }
+    if (title == "") {
+      Publicacao.updatePublicacaoByID(id, publ.getTitle_pub, text);
+    } else {
+      Publicacao.updatePublicacaoByID(id, title, text);
+    }
+
+    // Simulando a adição de uma publicação (ajuste conforme sua lógica real)
+
+    // Retornar uma resposta com os dados da nova publicação
+    return new Response(JSON.stringify({ message: "OK" }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    // Retornar uma resposta de erro
+    return new Response(JSON.stringify({ message: "Erro", error }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+}

@@ -24,6 +24,14 @@ E por baixo dessa imagem seria exposto todas as publicações da mais recentes p
 
 ![Alt text](./public/image.png)
 
+### Para fazer
+* Botão para apagar ou alterar cada publicação
+* Loading Screen
+* Versão 0.7: 
+  * Adicionar users, o seu perfil para verem as suas publicações e alterar os seus dados
+  * cada um apaga/edita so a sua publicacao 
+  * adicionar o botao de login
+
 ----
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
