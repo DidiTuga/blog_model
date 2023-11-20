@@ -134,7 +134,7 @@ function Home() {
     setPubEditavel(pub);
     if (editavel) {
       setEditavel(false);
-    }else{
+    } else {
       setEditavel(true);
     }
   };
@@ -232,17 +232,27 @@ function Home() {
                   </div>
                   <div className="card-body">
                     {editavel && pubEditavel.ID_pub == pub.ID_pub ? (
-                      <div>
-                        <input
-                          type="text"
-                          placeholder={pub.title_pub}
-                          onChange={(e) => setPubEditavelTitle(e.target.value)}
-                        />
-                        <textarea
-                          placeholder={pub.text_pub}
-                          onChange={(e) => setPubEditavelText(e.target.value)}
-                        />
-                        <button onClick={handleSalvar}>Salvar</button>
+                      <div className="">
+                        <div className="mb-3">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder={pub.title_pub}
+                            onChange={(e) =>
+                              setPubEditavelTitle(e.target.value)
+                            }
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <textarea
+                            className="form-control"
+                            placeholder={pub.text_pub}
+                            onChange={(e) => setPubEditavelText(e.target.value)}
+                          />
+                        </div>
+                        <div className="">
+                          <button className="btn btn-dark"   onClick={handleSalvar}>Salvar</button>
+                        </div>
                       </div>
                     ) : (
                       <div>
