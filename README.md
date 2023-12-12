@@ -24,11 +24,17 @@ E por baixo dessa imagem seria exposto todas as publicações da mais recentes p
 
 ![Alt text](./public/image.png)
 
-### Para fazer
+### Feito
 * Botão para apagar ou alterar cada publicação
+
+### LOGIN 
+NEXT AUTH -> session.user -> image, name, email
+agora falta mandar isto para uma base de dados para assim termos ID.user
+
+### Para fazer
 * Loading Screen
 * Versão 0.7: 
-  * Adicionar users, o seu perfil para verem as suas publicações e alterar os seus dados
+  * Adicionar users, o seu perfil para verem as suas publicações e alterar os seus dados [ USAR NEXT JS AUTH]
   * cada um apaga/edita so a sua publicacao 
   * adicionar o botao de login
 

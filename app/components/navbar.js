@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import Prof_log from "./prof_log";
 
 function NavBar() {
   // use client
@@ -21,6 +23,9 @@ function NavBar() {
               </li>
               <li className="nav-item">
                 <Link href="/api/pub"  className="nav-link text-white">API</Link>
+              </li>
+              <li className="nav-item">
+                <Prof_log />
               </li>
             </ul>
           </div>

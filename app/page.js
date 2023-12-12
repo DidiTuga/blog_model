@@ -2,10 +2,8 @@
 "use client";
 
 import "bootstrap/dist/css/bootstrap.css";
-import NavBar from "./components/navbar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
 
 function Home() {
   const [title, setTitle] = useState("");
@@ -158,7 +156,6 @@ function Home() {
 
   return (
     <main>
-      <NavBar />
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8">
