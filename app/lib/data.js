@@ -4,35 +4,39 @@ let publicacoes = [];
 let users = [];
 
 function atualizaPublicacoes() {
-  db.query("SELECT * FROM pub", function (err, rows, fields) {
-    if (err) throw err;
-    const publ = rows.map((row) => {
-      return new Publicacao(
-        row.ID_pub,
-        row.data_pub,
-        row.title_pub,
-        row.text_pub,
-        row.ID_user,
-        row.edit_pub
-      );
-    });
-    publicacoes = publ;
-  });
+  db.query(
+    "SELECT ID_pub, data_pub, title_pub, text_pub, ID_user, edit_pub FROM pub",
+    function (err, rows, fields) {
+      if (err) throw err;
+      const publ = rows.map((row) => {
+        return new Publicacao(
+          row.ID_pub,
+          row.data_pub,
+          row.title_pub,
+          row.text_pub,
+          row.ID_user,
+          row.edit_pub
+        );
+      });
+      publicacoes = publ;
+    }
+  );
 }
 function atualizaUsers() {
-  db.query("SELECT * FROM user", function (err, rows, fields) {
-    if (err) throw err;
-    const user = rows.map((row) => {
-      return new User(
-        row.ID_user,
-        row.name_user,
-        row.email_user,
-        row.image_user,
-        row.password_user
-      );
-    });
-    users = user;
-  }
+  db.query(
+    "SELECT ID_user, name_user, email_user, image_user FROM user",
+    function (err, rows, fields) {
+      if (err) throw err;
+      const user = rows.map((row) => {
+        return new User(
+          row.ID_user,
+          row.name_user,
+          row.email_user,
+          row.image_user
+        );
+      });
+      users = user;
+    }
   );
 }
 
@@ -154,14 +158,12 @@ export class Publicacao {
   }
 }
 
-
 export class User {
-  constructor (ID_user, name_user, email_user, image_user, password_user) {
+  constructor(ID_user, name_user, email_user, image_user) {
     this.ID_user = ID_user;
     this.name_user = name_user;
     this.email_user = email_user;
     this.image_user = image_user;
-    this.password_user = password_user;
   }
   get getID_user() {
     return this.ID_user;
@@ -187,12 +189,6 @@ export class User {
   set setImage_user(value) {
     this.image_user = value;
   }
-  get getPassword_user() {
-    return this.password_user;
-  }
-  set setPassword_user(value) {
-    this.password_user = value;
-  }
   static getUsers() {
     try {
       atualizaUsers();
@@ -204,12 +200,12 @@ export class User {
   static addUser(user) {
     try {
       const result = db.query(
-        "INSERT INTO user (name_user, email_user, image_user, password_user) VALUES (?, ?, ?, SHA2(?, 256))",
+        "INSERT INTO user (ID_user, name_user, email_user, image_user) VALUES (?, ?, ?, ?)",
         [
+          user.getID_user,
           user.getName_user,
           user.getEmail_user,
           user.getImage_user,
-          user.getPassword_user,
         ]
       );
     } catch (error) {
@@ -225,15 +221,15 @@ export class User {
     }
   }
 
-  static updateUserByID(ID_user, name_user, email_user, image_user, password_user) {
+  static updateUserByID(ID_user, name_user, email_user, image_user) {
     try {
       if (!ID_user) {
         throw new Error("ID_user não informado");
       }
 
       db.query(
-        "UPDATE user SET name_user = ?, email_user = ?, image_user = ?, password_user = SHA2(?, 256) WHERE ID_user = ?",
-        [name_user, email_user, image_user, password_user, ID_user]
+        "UPDATE user SET name_user = ?, email_user = ?, image_user = ?) WHERE ID_user = ?",
+        [name_user, email_user, image_user, ID_user]
       );
     } catch (error) {
       console.error("Erro ao atualizar user:", error);
@@ -251,5 +247,4 @@ export class User {
       console.error("Erro ao apagar user:", error);
     }
   }
-
 }

@@ -16,6 +16,11 @@ A classe publicações vai ter os seguintes atributos:
 * ID_user - inicialmente com 0 mas no futuro seria o id_user que criou a publicacao
 * edit_pub (0/1) - 0 se nao foi editado e 1 se foi editado 
 
+A classe user tem os seguintes atributos: (VAI BUSCAR OS DADOS AO GITHUB)
+* ID_user - id do utilizador
+* name_user - Nome do utilizador
+* email_user
+* image_user - URL para a imagem do github do utilizador
 
 ## Layout
 
