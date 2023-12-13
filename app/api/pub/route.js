@@ -3,10 +3,6 @@ import { Publicacao } from "../../lib/data.js";
 
 export async function GET(request) {
   try {
-    // Obtendo os parâmetros da requisição, se necessário
-    //const body = request.nextUrl.searchParams;
-    //console.log(body.get("id_pub"));
-
     // Aguardando a resolução da Promise retornada por getPublicacoes
     const posts = await Publicacao.getPublicacoes();
 

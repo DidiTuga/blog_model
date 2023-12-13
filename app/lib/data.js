@@ -1,6 +1,7 @@
 const db = require("./db");
 
 let publicacoes = [];
+let users = [];
 
 function atualizaPublicacoes() {
   db.query("SELECT * FROM pub", function (err, rows, fields) {
@@ -17,6 +18,22 @@ function atualizaPublicacoes() {
     });
     publicacoes = publ;
   });
+}
+function atualizaUsers() {
+  db.query("SELECT * FROM user", function (err, rows, fields) {
+    if (err) throw err;
+    const user = rows.map((row) => {
+      return new User(
+        row.ID_user,
+        row.name_user,
+        row.email_user,
+        row.image_user,
+        row.password_user
+      );
+    });
+    users = user;
+  }
+  );
 }
 
 export class Publicacao {
@@ -135,4 +152,104 @@ export class Publicacao {
       console.error("Erro ao atualizar publ:", error);
     }
   }
+}
+
+
+export class User {
+  constructor (ID_user, name_user, email_user, image_user, password_user) {
+    this.ID_user = ID_user;
+    this.name_user = name_user;
+    this.email_user = email_user;
+    this.image_user = image_user;
+    this.password_user = password_user;
+  }
+  get getID_user() {
+    return this.ID_user;
+  }
+  set setID_user(value) {
+    this.ID_user = value;
+  }
+  get getName_user() {
+    return this.name_user;
+  }
+  set setName_user(value) {
+    this.name_user = value;
+  }
+  get getEmail_user() {
+    return this.email_user;
+  }
+  set setEmail_user(value) {
+    this.email_user = value;
+  }
+  get getImage_user() {
+    return this.image_user;
+  }
+  set setImage_user(value) {
+    this.image_user = value;
+  }
+  get getPassword_user() {
+    return this.password_user;
+  }
+  set setPassword_user(value) {
+    this.password_user = value;
+  }
+  static getUsers() {
+    try {
+      atualizaUsers();
+      return users;
+    } catch (error) {
+      console.error("Erro ao buscar users:", error);
+    }
+  }
+  static addUser(user) {
+    try {
+      const result = db.query(
+        "INSERT INTO user (name_user, email_user, image_user, password_user) VALUES (?, ?, ?, SHA2(?, 256))",
+        [
+          user.getName_user,
+          user.getEmail_user,
+          user.getImage_user,
+          user.getPassword_user,
+        ]
+      );
+    } catch (error) {
+      console.log("Erro ao adicionar publ:", error);
+    }
+  }
+  static getUserByID(ID_user) {
+    try {
+      const user = users.find((user) => user.getID_user == ID_user);
+      return user;
+    } catch (error) {
+      console.error("Erro ao buscar user:", error);
+    }
+  }
+
+  static updateUserByID(ID_user, name_user, email_user, image_user, password_user) {
+    try {
+      if (!ID_user) {
+        throw new Error("ID_user não informado");
+      }
+
+      db.query(
+        "UPDATE user SET name_user = ?, email_user = ?, image_user = ?, password_user = SHA2(?, 256) WHERE ID_user = ?",
+        [name_user, email_user, image_user, password_user, ID_user]
+      );
+    } catch (error) {
+      console.error("Erro ao atualizar user:", error);
+    }
+  }
+
+  static deleteUserByID(ID_user) {
+    try {
+      if (!ID_user) {
+        throw new Error("ID_user não informado");
+      }
+
+      db.query("DELETE FROM user WHERE ID_user = ?", [ID_user]);
+    } catch (error) {
+      console.error("Erro ao apagar user:", error);
+    }
+  }
+
 }
