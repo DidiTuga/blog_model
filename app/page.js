@@ -4,6 +4,7 @@
 import "bootstrap/dist/css/bootstrap.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import PublicacaoCard from "./components/PublicacaoCard";
 
 function Home() {
   const [title, setTitle] = useState("");
@@ -96,63 +97,10 @@ function Home() {
     }
   };
 
-  const putPub = async (id, title, text) => {
-    try {
-      const response = await fetch("/api/pub", {
-        method: "PUT",
-        body: JSON.stringify({ id, title, text }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      await response.json();
-      // atualiza a página
-
-      location.reload();
-    } catch (error) {
-      console.error(
-        "There was a problem with the fetch operation: " + error.message
-      );
-    }
-  };
   // obtem os dados do servidor ao carregar a página
   useEffect(() => {
     getPub();
   }, []);
-  const [pubEditavel, setPubEditavel] = useState(null);
-  const [pubEditavelTitle, setPubEditavelTitle] = useState("");
-  const [pubEditavelText, setPubEditavelText] = useState("");
-  const [editavel, setEditavel] = useState(false);
-
-  const handleEditar = (pub) => {
-    setPubEditavel(pub);
-    if (editavel) {
-      setEditavel(false);
-    } else {
-      setEditavel(true);
-    }
-  };
-
-  const handleSalvar = () => {
-    setEditavel(false);
-    // se o texto for vazio, não faz nada
-    if (pubEditavelText === "" && pubEditavelTitle === "") {
-      return;
-    }
-
-    if (pubEditavelText === "") {
-      setPubEditavelText(pubEditavel.text_pub);
-    }
-    if (pubEditavelTitle === "") {
-      setPubEditavelTitle(pubEditavel.title_pub);
-    }
-    // Aqui você pode fazer algo com o texto, como enviar para um servidor
-    putPub(pubEditavel.ID_pub, pubEditavelTitle, pubEditavelText);
-  };
 
   return (
     <main>
@@ -197,71 +145,11 @@ function Home() {
 
             <div>
               {pubs.map((pub) => (
-                <div key={pub.ID_pub} className="card mt-3 mb-3">
-                  <div className="card-header d-flex justify-content-between">
-                    <div>{pub.data_pub}</div>
-                    <div>
-                      <button
-                        onClick={() => handleEditar(pub)}
-                        type="button"
-                        className="border-0 p-0 cursor-pointer bg-transparent"
-                      >
-                        <Image
-                          src="/edit.svg"
-                          alt="Delete"
-                          width="20"
-                          height="20"
-                        />
-                      </button>
-                      <button
-                        onClick={() => deletePub(pub.ID_pub)}
-                        type="button"
-                        className="border-0 p-0 cursor-pointer bg-transparent"
-                      >
-                        <Image
-                          src="/delete.svg"
-                          alt="Delete"
-                          width="20"
-                          height="20"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    {editavel && pubEditavel.ID_pub == pub.ID_pub ? (
-                      <div className="">
-                        <div className="mb-3">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder={pub.title_pub}
-                            onChange={(e) =>
-                              setPubEditavelTitle(e.target.value)
-                            }
-                          />
-                        </div>
-                        <div className="mb-3">
-                          <textarea
-                            className="form-control"
-                            placeholder={pub.text_pub}
-                            onChange={(e) => setPubEditavelText(e.target.value)}
-                          />
-                        </div>
-                        <div className="">
-                          <button className="btn btn-dark"   onClick={handleSalvar}>Salvar</button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div>
-                        <h5 className="card-title">{pub.title_pub}</h5>
-                        <p className="card-text">{pub.text_pub}</p>
-                      </div>
-                    )}
-                  </div>
-                  <div className="card-footer text-muted">
-                    Publicada por: ...
-                  </div>
-                </div>
+                <PublicacaoCard
+                  key={pub.ID_pub}
+                  pub={pub}
+                  deletePub={deletePub}
+                />
               ))}
             </div>
           </div>
