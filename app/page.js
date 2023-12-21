@@ -2,16 +2,24 @@
 "use client";
 
 import "bootstrap/dist/css/bootstrap.css";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import PublicacaoCard from "./components/PublicacaoCard";
+import { useSession} from "next-auth/react";
 
 function Home() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [pubs, setPubs] = useState([]);
-
+  const [user, setUser] = useState(null);
+  const {data: session, status} = useSession();
+  useEffect(() => {
+    if (status === "authenticated") {
+      setUser(session?.user);
+      console.log(user);
+      // Agora você pode fazer o que precisa com os dados do usuário
+    }
+  }, [status, session]);
   // obtem os dados do servidor
   const getPub = async () => {
     try {
@@ -46,13 +54,14 @@ function Home() {
   // envia os dados do formulário para o servidor
   const submitPub = async () => {
     try {
+      const email = user.email;
       if (title === "" || text === "") {
         setErrorMessage("Preencha todos os campos!");
       } else {
         setErrorMessage("");
         const response = await fetch("/api/pub", {
           method: "POST",
-          body: JSON.stringify({ title, text }),
+          body: JSON.stringify({ title, text, email }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -149,6 +158,7 @@ function Home() {
                   key={pub.ID_pub}
                   pub={pub}
                   deletePub={deletePub}
+                  email={user?.email}
                 />
               ))}
             </div>

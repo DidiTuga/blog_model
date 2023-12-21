@@ -1,11 +1,10 @@
 const db = require("./db");
 
 let publicacoes = [];
-let users = [];
 
 function atualizaPublicacoes() {
   db.query(
-    "SELECT ID_pub, data_pub, title_pub, text_pub, ID_user, edit_pub FROM pub",
+    "SELECT ID_pub, data_pub, title_pub, text_pub, email_user, edit_pub FROM pub",
     function (err, rows, fields) {
       if (err) throw err;
       const publ = rows.map((row) => {
@@ -14,28 +13,11 @@ function atualizaPublicacoes() {
           row.data_pub,
           row.title_pub,
           row.text_pub,
-          row.ID_user,
+          row.email_user,
           row.edit_pub
         );
       });
       publicacoes = publ;
-    }
-  );
-}
-function atualizaUsers() {
-  db.query(
-    "SELECT ID_user, name_user, email_user, image_user FROM user",
-    function (err, rows, fields) {
-      if (err) throw err;
-      const user = rows.map((row) => {
-        return new User(
-          row.ID_user,
-          row.name_user,
-          row.email_user,
-          row.image_user
-        );
-      });
-      users = user;
     }
   );
 }
@@ -45,12 +27,12 @@ export class Publicacao {
 
   // construtor
 
-  constructor(ID_pub, data_pub, title_pub, text_pub, ID_user, edit_pub) {
+  constructor(ID_pub, data_pub, title_pub, text_pub, email_user, edit_pub) {
     this.ID_pub = ID_pub;
     this.data_pub = data_pub;
     this.title_pub = title_pub;
     this.text_pub = text_pub;
-    this.ID_user = ID_user;
+    this.email_user = email_user;
     this.edit_pub = edit_pub;
   }
   // getters e setters
@@ -78,11 +60,11 @@ export class Publicacao {
   set setText_pub(value) {
     this.text_pub = value;
   }
-  get getID_user() {
-    return this.ID_user;
+  get getemail_user() {
+    return this.email_user;
   }
-  set setID_user(value) {
-    this.ID_user = value;
+  set setemail_user(value) {
+    this.email_user = value;
   }
   get getEdit_pub() {
     return this.edit_pub;
@@ -105,12 +87,12 @@ export class Publicacao {
   static addPubl(publ) {
     try {
       const result = db.query(
-        "INSERT INTO pub (data_pub, title_pub, text_pub, ID_user, edit_pub) VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO pub (data_pub, title_pub, text_pub, email_user, edit_pub) VALUES (?, ?, ?, ?, ?)",
         [
           publ.getData_pub,
           publ.getTitle_pub,
           publ.getText_pub,
-          publ.getID_user,
+          publ.getemail_user,
           publ.getEdit_pub,
         ]
       );
@@ -154,97 +136,6 @@ export class Publicacao {
       );
     } catch (error) {
       console.error("Erro ao atualizar publ:", error);
-    }
-  }
-}
-
-export class User {
-  constructor(ID_user, name_user, email_user, image_user) {
-    this.ID_user = ID_user;
-    this.name_user = name_user;
-    this.email_user = email_user;
-    this.image_user = image_user;
-  }
-  get getID_user() {
-    return this.ID_user;
-  }
-  set setID_user(value) {
-    this.ID_user = value;
-  }
-  get getName_user() {
-    return this.name_user;
-  }
-  set setName_user(value) {
-    this.name_user = value;
-  }
-  get getEmail_user() {
-    return this.email_user;
-  }
-  set setEmail_user(value) {
-    this.email_user = value;
-  }
-  get getImage_user() {
-    return this.image_user;
-  }
-  set setImage_user(value) {
-    this.image_user = value;
-  }
-  static getUsers() {
-    try {
-      atualizaUsers();
-      return users;
-    } catch (error) {
-      console.error("Erro ao buscar users:", error);
-    }
-  }
-  static addUser(user) {
-    try {
-      const result = db.query(
-        "INSERT INTO user (ID_user, name_user, email_user, image_user) VALUES (?, ?, ?, ?)",
-        [
-          user.getID_user,
-          user.getName_user,
-          user.getEmail_user,
-          user.getImage_user,
-        ]
-      );
-    } catch (error) {
-      console.log("Erro ao adicionar publ:", error);
-    }
-  }
-  static getUserByID(ID_user) {
-    try {
-      const user = users.find((user) => user.getID_user == ID_user);
-      return user;
-    } catch (error) {
-      console.error("Erro ao buscar user:", error);
-    }
-  }
-
-  static updateUserByID(ID_user, name_user, email_user, image_user) {
-    try {
-      if (!ID_user) {
-        throw new Error("ID_user não informado");
-      }
-
-      db.query(
-        "UPDATE user SET name_user = ?, email_user = ?, image_user = ?) WHERE ID_user = ?",
-        [name_user, email_user, image_user, ID_user]
-      );
-    } catch (error) {
-      console.error("Erro ao atualizar user:", error);
-    }
-  }
-
-  static deleteUserByID(ID_user) {
-    try {
-      if (!ID_user) {
-        throw new Error("ID_user não informado");
-      }
-
-      db.query("DELETE FROM user WHERE ID_user = ?", [ID_user]);
-    } catch (error) {
-      console.error("Erro ao apagar user:", error);
     }
   }
 }

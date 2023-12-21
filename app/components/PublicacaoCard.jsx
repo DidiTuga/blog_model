@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-const PublicacaoCard = ({ pub, handleEditar, deletePub }) => {
+
+const PublicacaoCard = ({ pub, handleEditar, deletePub, email }) => {
   const [editavel, setEditavel] = useState(false);
   const [pubEditavelTitle, setPubEditavelTitle] = useState("");
   const [pubEditavelText, setPubEditavelText] = useState("");
@@ -31,13 +32,12 @@ const PublicacaoCard = ({ pub, handleEditar, deletePub }) => {
   };
 
   const handleEditarClick = () => {
-    if (editavel){
-        setEditavel(false);
+    if (editavel) {
+      setEditavel(false);
+    } else {
+      setEditavel(true);
     }
-    else{
-        setEditavel(true);
-    }
-    };
+  };
 
   const handleSalvar = () => {
     setEditavel(false);
@@ -60,7 +60,9 @@ const PublicacaoCard = ({ pub, handleEditar, deletePub }) => {
     <div key={pub.ID_pub} className="card mt-3 mb-3 ">
       <div className="card-header d-flex justify-content-between">
         <div>{pub.data_pub}</div>
-        <div>
+
+          {pub.email_user == email ? (
+            <div>
           <button
             onClick={() => handleEditarClick()}
             type="button"
@@ -75,7 +77,11 @@ const PublicacaoCard = ({ pub, handleEditar, deletePub }) => {
           >
             <Image src="/delete.svg" alt="Apagar" width="20" height="20" />
           </button>
-        </div>
+          </div>
+          ) : (
+            <p></p>
+          )}
+
       </div>
       <div className="card-body">
         {editavel ? (
@@ -110,7 +116,7 @@ const PublicacaoCard = ({ pub, handleEditar, deletePub }) => {
           </div>
         )}
       </div>
-      <div className="card-footer text-muted">Publicada por: ...</div>
+      <div className="card-footer text-muted">Publicada por: {pub.email_user}</div>
     </div>
   );
 };

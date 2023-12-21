@@ -13,14 +13,9 @@ A classe publicações vai ter os seguintes atributos:
 * data_pub - data de quando foi criado / de quando foi editado
 * title_pub - titlo da pub (45car)
 * text_pub - conteudo da pub (300car)
-* ID_user - inicialmente com 0 mas no futuro seria o id_user que criou a publicacao
+* email_user - vai buscar o email do utilizador que estiver iniciado 
 * edit_pub (0/1) - 0 se nao foi editado e 1 se foi editado 
 
-A classe user tem os seguintes atributos: (VAI BUSCAR OS DADOS AO GITHUB)
-* ID_user - id do utilizador
-* name_user - Nome do utilizador
-* email_user
-* image_user - URL para a imagem do github do utilizador
 
 ## Layout
 
@@ -31,6 +26,9 @@ E por baixo dessa imagem seria exposto todas as publicações da mais recentes p
 
 ### Feito
 * Botão para apagar ou alterar cada publicação
+* User entram com github
+* cada usar so pode modificar/apagar as suas publicacoes
+* adicionado o botao de login
 
 ### LOGIN 
 NEXT AUTH -> session.user -> image, name, email
@@ -38,10 +36,7 @@ agora falta mandar isto para uma base de dados para assim termos ID.user
 
 ### Para fazer
 * Loading Screen
-* Versão 0.7: 
-  * Adicionar users, o seu perfil para verem as suas publicações e alterar os seus dados [ USAR NEXT JS AUTH]
-  * cada um apaga/edita so a sua publicacao 
-  * adicionar o botao de login
+* Melhorar dashboard e fazer o necessario para os logins
 
 ----
 

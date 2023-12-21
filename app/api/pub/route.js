@@ -25,9 +25,10 @@ export async function POST(request) {
     const data_pub = new Date().toISOString().slice(0, 19).replace("T", " ");
     const text = data.text;
     const title = data.title;
+    const email = data.email;
 
     // Simulando a adição de uma publicação (ajuste conforme sua lógica real)
-    const newPubl = new Publicacao(1, data_pub, title, text, 0, 0);
+    const newPubl = new Publicacao(1, data_pub, title, text, email, 0);
     Publicacao.addPubl(newPubl);
     // Retornar uma resposta com os dados da nova publicação
     return new Response(JSON.stringify({ message: "OK", newPubl }), {
