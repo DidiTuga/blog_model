@@ -5,6 +5,10 @@ import Image from "next/image";
 function dashboard() {
   const {data: session, status} = useSession();
 
+  if (status ==="authenticated"){
+    window.location.href = "/";
+}
+
 
   return (
     <main className="container mt-5">
