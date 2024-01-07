@@ -15,8 +15,7 @@ function Home() {
   const {data: session, status} = useSession();
   useEffect(() => {
     if (status === "authenticated") {
-      setUser(session?.user);
-      console.log(user);
+      setUser(session?.user);;
       // Agora você pode fazer o que precisa com os dados do usuário
     }else if (status === "unauthenticated"){
         window.location.href = "/";
@@ -83,30 +82,7 @@ function Home() {
     }
   };
 
-  // apaga uma publicação do servidor pelo id
-  const deletePub = async (id) => {
-    try {
-      const response = await fetch("/api/pub", {
-        method: "DELETE",
-        body: JSON.stringify({ id }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      await response.json();
-      // atualiza a página
-
-      location.reload();
-    } catch (error) {
-      console.error(
-        "There was a problem with the fetch operation: " + error.message
-      );
-    }
-  };
+ 
 
   // obtem os dados do servidor ao carregar a página
   useEffect(() => {
@@ -159,7 +135,6 @@ function Home() {
                 <PublicacaoCard
                   key={pub.ID_pub}
                   pub={pub}
-                  deletePub={deletePub}
                   email={user?.email}
                 />
               ))}

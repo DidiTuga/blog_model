@@ -26,7 +26,7 @@ export async function POST(request) {
     const text = data.text;
     const title = data.title;
     const email = data.email;
-
+    console.log(data + " " + data_pub + " " + text + " " + title + " " + email);
     // Simulando a adição de uma publicação (ajuste conforme sua lógica real)
     const newPubl = new Publicacao(1, data_pub, title, text, email, 0);
     Publicacao.addPubl(newPubl);

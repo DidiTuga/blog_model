@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 
-const PublicacaoCard = ({ pub, handleEditar, deletePub, email }) => {
+const PublicacaoCard = ({ pub, email }) => {
   const [editavel, setEditavel] = useState(false);
   const [pubEditavelTitle, setPubEditavelTitle] = useState("");
   const [pubEditavelText, setPubEditavelText] = useState("");
@@ -12,6 +12,30 @@ const PublicacaoCard = ({ pub, handleEditar, deletePub, email }) => {
       const response = await fetch("/api/pub", {
         method: "PUT",
         body: JSON.stringify({ id, title, text }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      await response.json();
+      // atualiza a página
+
+      location.reload();
+    } catch (error) {
+      console.error(
+        "There was a problem with the fetch operation: " + error.message
+      );
+    }
+  };
+   // apaga uma publicação do servidor pelo id
+   const deletePub = async (id) => {
+    try {
+      const response = await fetch("/api/pub", {
+        method: "DELETE",
+        body: JSON.stringify({ id }),
         headers: {
           "Content-Type": "application/json",
         },

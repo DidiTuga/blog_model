@@ -13,8 +13,8 @@ export default function log() {
                     <div className="col-12">
                         <h1 className="mt-5">Log</h1>
                         <p className="description mb-4">
-                            This is the log page. You can access this page only after
-                            authentication.
+                            STARTING PAGE OF THE APPLICATION
+                            U NEED TO LOGIN TO ACCESS THE OTHER PAGES
                         </p>
                     </div>
                 </div>

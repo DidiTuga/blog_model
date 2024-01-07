@@ -60,10 +60,10 @@ export class Publicacao {
   set setText_pub(value) {
     this.text_pub = value;
   }
-  get getemail_user() {
+  get getEmail_user() {
     return this.email_user;
   }
-  set setemail_user(value) {
+  set setEmail_user(value) {
     this.email_user = value;
   }
   get getEdit_pub() {
@@ -83,6 +83,16 @@ export class Publicacao {
       console.error("Erro ao buscar publs:", error);
     }
   }
+  static getPublicacoesByUser(email_user) {
+    try {
+      atualizaPublicacoes();
+      const publ = publicacoes.filter((publ) => publ.getEmail_user == email_user);
+      return publ;
+    } catch (error) {
+      console.error("Erro ao buscar publs:", error);
+    }
+  }
+
   // adiciona um publ
   static addPubl(publ) {
     try {
@@ -92,7 +102,7 @@ export class Publicacao {
           publ.getData_pub,
           publ.getTitle_pub,
           publ.getText_pub,
-          publ.getemail_user,
+          publ.getEmail_user,
           publ.getEdit_pub,
         ]
       );

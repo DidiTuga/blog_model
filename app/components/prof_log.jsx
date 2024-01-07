@@ -9,7 +9,7 @@ export default function Prof_log() {
       <div className="d-flex align-items-center">
         <div className="me-2">
           <Image
-            src={session.user.image}
+            src={session?.user.image}
             width={35} height={35}
             className="rounded-circle"
             alt="profile image"
